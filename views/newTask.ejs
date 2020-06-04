@@ -1,0 +1,48 @@
+<%- include("partials/header") %>
+
+<% if(darkTheme){ %>
+    <link rel="stylesheet" href="/form.css">
+<% }else{ %>
+    <link rel="stylesheet" href="/form_light.css">
+<% } %>
+
+<div class="container" id="topic">
+    <div class="alert">
+        Add your new task below...
+    </div>
+</div>
+<div class="container" id="form-box">
+    <form class="form-horizontal" action="/toDoApp" method="POST">
+        <div class="form-group">
+            <label for="title" class="col-sm-2 control-label"> Task : </label>
+            <input class="form-control" type="text" name="title" placeholder="Title" required>
+        </div>
+        <div>
+            <label for="title" class="col-sm-2 control-label"> Description : </label>
+            <div class="form-group">
+                <textarea class="form-control" name="details" cols="30" rows="10" placeholder="Add description of your task" required></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="date" class="col-sm-2 control-label"> Due on :</label>
+            <input class="form-control" type="text" name="date" placeholder="dd.mm.yyyy" required>
+        </div>
+        <div class="form-group">
+            <label for="date"> Category : </label>
+            <select name="label" class="form-control" id="drop" required>
+                <option value="none" selected disabled hidden> 
+                    Select an Option 
+                </option> 
+                <option value="personal"><i class="fas fa-user-tie"></i> Personal</option>
+                <option value="work"><i class="fas fa-briefcase"></i> Work</option>
+                <option value="shopping"><i class="fas fa-shopping-cart"></i> Shopping</option>
+                <option value="others"><i class="fas fa-list-ul"></i> Others</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">Add Task</button>
+        </div>
+    </form>
+</div>
+
+<%- include("partials/footer") %>

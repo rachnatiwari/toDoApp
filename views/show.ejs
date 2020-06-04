@@ -1,0 +1,79 @@
+<%- include("partials/header") %>
+<% if(darkTheme){ %>
+    <link rel="stylesheet" href="/show.css">
+<% }else{ %>
+    <link rel="stylesheet" href="/show_light.css">
+<% } %>
+
+<% if(type=="active"){ %>
+    <div class="jumbotron">You have to : <%= task.title %></div>
+    <div class="container">
+        <div class="col-md-12 col-sm-12">
+            <div class="thumbnail">
+               <img src="<%= task.image %>">
+               <div class="caption">
+                   <h2>Due on : <%= task.dueDate %></h2>
+               </div>
+               <p>
+                   <div>
+                       <p>
+                        <%= task.details %>
+                       </p>
+                    </div>
+                   <% if(task.status==="new"){ %>
+                    <div>
+                        <a href="/toDoApp/<%= task.id %>/changeStatus">
+                            <button class="btn btn-warning" id="start">Start Task</button>
+                        </a>
+                        <a href="/toDoApp/<%= task.id %>/delete">
+                            <button class="btn btn-danger" id="end">Delete Task</button>
+                        </a>
+                    </div>
+                <% }else{ %> 
+                    <div>
+                        <a href="/toDoApp/<%= task.id %>/changeStatus">
+                            <button class="btn btn-success" id="end">Complete Task</button>
+                        </a>
+                        <a href="/toDoApp/<%= task.id %>/delete">
+                            <button class="btn btn-danger" id="end">Delete Task</button>
+                        </a>
+                    </div> 
+                <% } %>
+               </p>
+            </div>
+        </div>
+    </div>    
+<% }else{ %>
+    <div class="jumbotron">You had to : <%= task.title %></div>
+    <div class="container">
+        <div class="col-md-12 col-sm-12">
+            <div class="thumbnail">
+               <img src="<%= task.image %>">
+               <div class="caption">
+                   <h2>Was due on : <%= task.dueDate %></h2>
+               </div>
+               <p>
+                   <div>
+                       <p><%= task.details %></p>
+                    </div>
+               </p>
+            </div>
+        </div>
+        <% if(task.status=="completed"){ %>
+            <div class="alert alert-success">
+                <strong>Congratualations</strong> you completed this task!!!!
+            </div> 
+        <% }else{ %>
+            <div class="alert alert-danger">
+                <strong>Oops</strong> you couldn't complete this task...
+            </div> 
+        <% } %>
+            <div>
+                <a href="/toDoApp/archives">
+                    <button class="btn btn-primary" id="end">Show all completed tasks</button>
+                </a>
+            </div>    
+    </div>    
+<% } %>   
+
+<%- include("partials/footer") %>

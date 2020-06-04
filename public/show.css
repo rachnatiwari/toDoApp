@@ -1,0 +1,32 @@
+body{
+    color: whitesmoke;
+    background: #000000;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #434343, #000000);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #434343, #000000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ 
+}
+.container{
+    margin : 0px auto;
+    text-align: -webkit-center;
+    width: 100%;
+}
+.jumbotron{
+    font-size: 4em;
+    text-align: center;
+    margin : 2%;
+    padding: 30px;
+    color:black;
+}
+img{
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    margin-bottom: 2px;
+}
+.btn{
+    border: none;
+    width : 60%;
+    font-size: 1.5rem;
+    background-color: black;
+    color: whitesmoke;
+    margin-bottom: 6px;
+}

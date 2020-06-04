@@ -1,0 +1,35 @@
+.navbar-brand:hover{
+    color: whitesmoke !important;
+    background-color: black;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.navbar{
+   padding-top : 0px !important;
+   padding-bottom : 0px !important;
+   padding-left: 20px;
+}
+
+.navbar-brand{
+   padding : 5px;
+}
+body{
+   font-family: Roboto !important;
+}
+nav{
+height: 47px;
+display:inline-block;
+}
+
+#archive{
+    color:black;
+}
+
+.fa-palette{
+    padding: 5px;
+    padding-bottom: 7px;
+    padding-top: 3px;
+}

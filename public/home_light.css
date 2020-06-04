@@ -1,0 +1,47 @@
+body{
+    background: #8e9eab;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #eef2f3, #8e9eab);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #eef2f3, #8e9eab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.jumbotron{
+    font-size : 5em;
+    text-align: center;
+    margin-top: 2rem;
+    border-radius: 10px;
+    background-color: rgba(39, 44, 49, 0.7) !important;
+    color: whitesmoke;
+}
+
+img{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-left : 25%;
+}
+
+.thumbnail{
+    background: rgba(39, 44, 49, 1);  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #434343, rgba(39, 44, 49, 0.7));  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #434343, rgba(39, 44, 49, 0.7)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ 
+    margin-top: 25px;
+    margin-bottom: 25px;
+    border: 6px solid rgba(255, 255, 255, 0.5);
+    border-radius: 10%;
+    padding : 25px;
+    width: 95%;
+}
+
+.btn{
+    width: -webkit-fill-available;
+    margin : 3px;
+}
+h4{
+    text-align: center;
+    color : white;
+}
+
+.btn-info{
+    background-color: rgba(209, 191, 176, 0.9);
+    border: none;
+    color: black;
+}

@@ -1,0 +1,46 @@
+<%- include("partials/header") %>
+<% if(darkTheme){ %>
+    <link rel="stylesheet" href="/home.css">
+<% }else{ %>
+    <link rel="stylesheet" href="/home_light.css">
+<% } %>
+
+<div class="container">
+    <div class="jumbotron">
+        To-do List of tasks 
+        <div class="container">
+            <a href="/toDoApp/new">
+                <button class="btn btn-info btn-lg" style="width: 50%;"> Create new task </button>
+            </a> 
+        </div>  
+    </div>
+    <div class="row">
+        <% if(tasks.length!=0){ %>
+            <% tasks.forEach(function(task){ %>
+                <div class = "col-sm-12 col-md-6 col-lg-4">
+                    <div class="thumbnail">
+                        <img src="<%= task.image %>" alt="">
+                        <div class="caption">
+                            <h4><%= task.title %></h4>
+                        </div>
+                        <div>
+                            <a href="/toDoApp/<%= task.id %>"><button type="button" class="btn btn-info">Details</button></a>
+                        </div>
+                        <% if(task.status==="new"){ %>
+                            <div>
+                            <a href="/toDoApp/<%= task.id %>/changeStatus" id="start"><button class="btn btn-warning">Start Task</button></a>
+                            </div>
+                        <% }else{ %> 
+                            <div>
+                                <a href="/toDoApp/<%= task.id %>/changeStatus" id="end"><button class="btn btn-success">Complete Task</button></a>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            <% }) %>
+        <% } %>
+    </div>
+</div>
+
+
+<%- include("partials/footer") %>

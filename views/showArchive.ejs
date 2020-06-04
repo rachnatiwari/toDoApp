@@ -1,0 +1,30 @@
+<%- include("partials/header") %>
+
+<% if(darkTheme){ %>
+    <link rel="stylesheet" href="/home.css">
+<% }else{ %>
+    <link rel="stylesheet" href="/home_light.css">
+<% } %>
+
+<div class="container">
+    <div class="jumbotron"> Archives </div>
+    <div class="row">
+        <% if(archive.length!=0){ %>
+            <% archive.forEach(function(item){ %>
+                <div class = "col-sm-12 col-md-6 col-lg-4">
+                    <div class="thumbnail">
+                        <img src="<%= item.image %>" alt="">
+                        <div class="caption">
+                            <h4><%= item.title %></h4>
+                        </div>
+                        <div>
+                            <a href="/toDoApp/archives/<%= item.id %>"><button type="button" class="btn btn-info">Details</button></a>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        <% } %>
+    </div>   
+</div>
+
+<%- include("partials/footer") %>
