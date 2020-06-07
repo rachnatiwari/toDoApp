@@ -1,11 +1,37 @@
-<h1>This is signup page</h1>
+<%- include("partials/header") %>
 
-<form action="/toDoApp/signup" method="POST">
-    Name : <input type="text" name="name">
-    Email : <input type="email" name="username">
-    Password : <input type="password" name="password">
-    <button type="submit">Submit</button>
-</form>
+<% if(darkTheme){ %>
+    <link rel="stylesheet" href="/form.css">
+<% }else{ %>
+    <link rel="stylesheet" href="/form_light.css">
+<% } %>
 
-<h4>Already a user?</h4>
-<a href="/toDoApp/login"> Login </a>
+<div class="container" id="topic">
+    <div class="alert">
+        Welcome to To-Do App - Sign up
+    </div>
+</div>
+<div class="container" id="form-box">
+    <form class="form-horizontal" action="/toDoApp/signup" method="POST">
+        <div class="form-group">
+            <label for="name" class="col-sm-2 control-label"> Name : </label>
+            <input class="form-control" type="text" name="name" placeholder="Enter your name" required>
+        </div>
+        <div class="form-group">
+            <label for="username" class="col-sm-2 control-label"> Username :</label>
+            <input class="form-control" type="email" name="username" placeholder="Enter your email" required>
+        </div>
+        <div class="form-group">
+            <label for="password" class="col-sm-2 control-label"> Password :</label>
+            <input class="form-control" type="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">Register</button>
+        </div>
+    </form>
+    <div class="form-group" id="form-footer">
+        <strong style="font-size: 1.1em;"> Already a user? </strong><a href="/toDoApp/login"><button class="btn btn-info" style="width: 100px;">Login</button></a>
+    </div>
+</div>
+
+<%- include("partials/footer") %>

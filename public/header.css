@@ -16,13 +16,16 @@
 
 .navbar-brand{
    padding : 5px;
+   margin-top : 3px;
 }
+
 body{
    font-family: Roboto !important;
 }
+
 nav{
-height: 47px;
-display:inline-block;
+    height: 47px;
+    display:inline-block;
 }
 
 #texts{

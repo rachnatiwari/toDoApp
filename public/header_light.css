@@ -1,12 +1,13 @@
 .navbar-brand:hover{
     color: black !important;
-    background-color: #eef2f3;
+    background-color: rgb(227,231,234);
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
+
 .navbar{
    padding-top : 0px !important;
    padding-bottom : 0px !important;
@@ -15,17 +16,23 @@
 
 .navbar-brand{
    padding : 5px;
+   margin-top : 3px;
 }
+
 body{
    font-family: Roboto !important;
 }
+
 nav{
     height: 47px;
     display:inline-block;
 }
 
-#archive{
-    color:whitesmoke;
+#texts{
+    color: whitesmoke;
+    padding-bottom: 9px;
+    margin-top: 1px;
+    padding-top: 3.5px;
 }
 
 .fa-palette{

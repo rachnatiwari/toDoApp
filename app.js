@@ -47,7 +47,7 @@ var other_icon = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT5DVco
 //AUTHENTICATION ROUTES
 //Signup page 
 app.get("/toDoApp/signup",function(req,res){
-    res.render("signup");
+    res.render("signup",{darkTheme:darkTheme});
 });
 
 //Create or register new user
@@ -65,7 +65,7 @@ app.post("/toDoApp/signup",function(req,res){
 
 //Display page for login
 app.get("/toDoApp/login" , function(req,res){
-    res.render("login");
+    res.render("login",{darkTheme:darkTheme});
 });
 
 //Logging in the user
@@ -113,6 +113,12 @@ app.get("/toDoApp/newUser", isLoggedIn , function(req,res){
          });
         };   
     });
+});
+
+//Toggle theme 
+app.get("/toDoApp/changeTheme", function(req,res){
+    darkTheme = !darkTheme;
+    res.redirect('/');
 });
 
 //Show the tasks display or home page for the user
@@ -174,12 +180,6 @@ app.post("/toDoApp/:user_id/new", function(req,res){
         };   
     });
 }); 
-
-//Toggle theme 
-app.get("/toDoApp/:user_id/changeTheme" , function(req,res){
-    darkTheme = !darkTheme;
-    res.redirect('/toDoApp/' + req.user._id);
-});
 
 //Show selected archive task
 app.get("/toDoApp/:user_id/archives/:task_id", function(req,res){
