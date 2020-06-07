@@ -12,7 +12,7 @@
     </div>
 </div>
 <div class="container" id="form-box">
-    <form class="form-horizontal" action="/toDoApp" method="POST">
+    <form class="form-horizontal" action="/toDoApp/<%= currentUser._id%>/new" method="POST">
         <div class="form-group">
             <label for="title" class="col-sm-2 control-label"> Task : </label>
             <input class="form-control" type="text" name="task[title]" placeholder="Title" required>

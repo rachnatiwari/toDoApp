@@ -4,8 +4,8 @@ var express               = require("express"),
     passport              = require("passport"),
     bodyParser            = require("body-parser"),
     User                  = require("./models/user"),
-    Task                  = require("../models/tasks");
-    Archive               = require("../models/archives");
+    Task                  = require("./models/tasks");
+    Archive               = require("./models/archives");
     LocalStrategy         = require("passport-local"),
     passportLocalMongoose = require("passport-local-mongoose")
 
@@ -16,7 +16,7 @@ app.set('view engine', 'ejs');
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 
-//Authentication Setup
+//AUTHENTICATION SETUP
 app.use(require("express-session")({
     secret: "Random key for toDoApp",
     resave: false,
@@ -44,30 +44,6 @@ var shopping_icon = "https://t3.ftcdn.net/jpg/03/13/77/98/240_F_313779888_0Gc6K9
 var work_icon = "https://www.clipartkey.com/mpngs/m/74-740881_office-work-clipart-black-and-white.png";
 var other_icon = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT5DVcoflpsNCo81LquWGd3tyVXnN9-M4wWZqrPf7sSe6vJuYL3&usqp=CAU";
 
-// tasks=[
-//     {
-//         id : 0,
-//         image:personal_icon, 
-//         title:"Add in your first task", 
-//         dueDate: "01.01.2000", 
-//         label:"personal" , 
-//         status:"new" , 
-//         details:"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-//     }
-// ];
-// archive=[
-//     {
-//         id : 100, 
-//         image:work_icon, 
-//         title:"This is archived task", 
-//         dueDate:"09.12.2020", 
-//         label:"work" , 
-//         status:"completed",
-//         details : "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from 'de Finibus Bonorum et Malorum' by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham."
-//     }
-// ];
-// var curr_id =1;
-
 //AUTHENTICATION ROUTES
 //Signup page 
 app.get("/toDoApp/signup",function(req,res){
@@ -76,9 +52,10 @@ app.get("/toDoApp/signup",function(req,res){
 
 //Create or register new user
 app.post("/toDoApp/signup",function(req,res){
-    User.register(new User({username : req.body.username , name : req.body.Name}),req.body.password , function(err,user){
+    User.register(new User({username : req.body.username , name : req.body.name}),req.body.password , function(err,user){
         if(err){
-            return res.redirect('/toDoApp/signup');
+            console.log(err);
+            res.redirect('/toDoApp/signup');
         }
         passport.authenticate('local')(req,res,function(){
             res.redirect("/toDoApp/newUser");
@@ -92,14 +69,14 @@ app.get("/toDoApp/login" , function(req,res){
 });
 
 //Logging in the user
-app.post("/login", passport.authenticate("local", {
-    successRedirect: "/toDoApp",
+app.post("/toDoApp/login", passport.authenticate("local", {
+    successRedirect: "/",
     failureRedirect: "/toDoApp/login"
 }) ,function(req, res){
 });
 
 //Log out current user
-app.get("/logout" , function(req,res){
+app.get("/toDoApp/logout" , function(req,res){
     req.logout();
     res.redirect("/toDoApp/signup");
 });
@@ -110,9 +87,8 @@ app.get("/", isLoggedIn ,  function(req,res){
     res.redirect('/toDoApp/' + req.user._id);
 }); 
 
-//Redirecting the home page to user's home page
+//Redirecting the home page to a new user's home page
 app.get("/toDoApp/newUser", isLoggedIn , function(req,res){
-    res.redirect('/toDoApp/' + req.user._id);
     var newTask = {
         image:personal_icon, 
         title:"Add in your first task", 
@@ -132,7 +108,7 @@ app.get("/toDoApp/newUser", isLoggedIn , function(req,res){
             } else {
                 user.tasks.push(task);
                 user.save();
-                res.redirect('/toDoApp/' + user._id);
+                res.redirect('/toDoApp/' + req.user._id);
             }
          });
         };   
@@ -141,29 +117,28 @@ app.get("/toDoApp/newUser", isLoggedIn , function(req,res){
 
 //Show the tasks display or home page for the user
 app.get("/toDoApp/:user_id", isLoggedIn ,function(req,res){
-    User.findById(req.params.user_id).populate("tasks").exec(function(err, found){
+    //console.log(req.user);
+    User.findById(req.user._id).populate("tasks").exec(function(err, found){
         if(err){
             console.log(err);
         } else {
-            console.log(found)
-            res.render("home", {tasks: found,darkTheme:darkTheme});
+            res.render("home", {user:found,darkTheme:darkTheme});
         }
     });
 });
 
 //New task form
-app.get("/toDoApp/:user_id/new",function(req,res){
+app.get("/toDoApp/:user_id/new", isLoggedIn , function(req,res){
     res.render("newTask");
 });
 
 //Show archived tasks for the user
-app.get("/toDoApp/:user_id/archives", function(req,res){
+app.get("/toDoApp/:user_id/archives", isLoggedIn, function(req,res){
     User.findById(req.params.user_id).populate("archives").exec(function(err, found){
         if(err){
             console.log(err);
         } else {
-            console.log(found)
-            res.render("showArchive", {archives: found,darkTheme:darkTheme});
+            res.render("showArchive", {user: found,darkTheme:darkTheme});
         }
     });
 });
@@ -182,11 +157,10 @@ app.post("/toDoApp/:user_id/new", function(req,res){
     var newTask = req.body.task;
     newTask.image = img;
     newTask.status = "new";
-    console.log(task);
     User.findById(req.params.user_id, function(err, user){
         if(err){
             console.log(err);
-            res.redirect('/toDoApp/' + user._id);
+            res.redirect('/toDoApp/' + toString(user._id));
         } else {
          Task.create(newTask, function(err, task){
             if(err){
@@ -194,7 +168,7 @@ app.post("/toDoApp/:user_id/new", function(req,res){
             } else {
                 user.tasks.push(task);
                 user.save();
-                res.redirect('/toDoApp/' + user._id);
+                res.redirect('/toDoApp/' + toString(user._id));
             }
          });
         };   
@@ -224,6 +198,105 @@ app.get("/toDoApp/:user_id/archives/:task_id", function(req,res){
     });
 });
 
+//Delete any active task
+app.get("/toDoApp/:user_id/:task_id/delete" , function(req,res){
+    User.findById(req.params.user_id, function(err,user){
+        if(err){
+            console.log(err);
+        }else{
+            Task.findByIdAndUpdate(req.params.task_id ,{"status" : "deleted"},function(err,result){
+                if(err){
+                    console.log(err)
+                }else{
+                    var newArchiveTask = {
+                        image : result.image,
+                        title : result.title,
+                        dueDate: result.dueDate,
+                        label: result.label , 
+                        status: "deleted" ,
+                        details : result.details,
+                    }
+                    Archive.create(newArchiveTask, function(err, newArchive){
+                        if(err){
+                            console.log(err);
+                        } else {
+                            user.archives.push(newArchive);
+                            user.tasks.pull(result);
+                            user.save();
+                            Task.findByIdAndRemove(req.params.task_id,function(err,removedTask){
+                                if(err){
+                                    console.log(err);
+                                }else{
+                                    console.log(user);    
+                                }
+                            });   
+                        }
+                    });
+                    res.redirect("/toDoApp/" + req.user._id);
+                }
+            });
+        }
+    })
+});
+
+//Change the status of the task
+app.get("/toDoApp/:user_id/:task_id/changeStatus", function(req,res){
+    User.findById(req.params.user_id, function(err,user){
+        if(err){
+            console.log(err);
+        }else{
+            Task.findById(req.params.task_id ,function(err,found){
+                if(err){
+                    console.log(err);
+                }else{
+                    if(found.status=="new"){
+                        Task.findByIdAndUpdate(req.params.task_id ,{"status" : "inProgress"},function(err,result){
+                            if(err){
+                                console.log(err)
+                            }else{
+                                res.redirect("/toDoApp/" + req.user._id);
+                            }
+                        });
+                    }else{  
+                        Task.findByIdAndUpdate(req.params.task_id ,{"status" : "completed"},function(err,result){
+                            if(err){
+                                console.log(err)
+                            }else{
+                                var newArchiveTask = {
+                                    image : result.image,
+                                    title : result.title,
+                                    dueDate: result.dueDate,
+                                    label: result.label , 
+                                    status: "completed" ,
+                                    details : result.details,
+                                }
+                                Archive.create(newArchiveTask, function(err, newArchive){
+                                    if(err){
+                                        console.log(err);
+                                    } else {
+                                        user.archives.push(newArchive);
+                                        user.tasks.pull(result);
+                                        user.save();
+                                        Task.findByIdAndRemove(req.params.task_id,function(err,removedTask){
+                                            if(err){
+                                                console.log(err);
+                                            }else{
+                                                console.log(user);    
+                                            }
+                                        });   
+                                    }
+                                });
+                                res.redirect("/toDoApp/" + req.user._id);   
+                            }
+                        });
+                    }            
+                }
+            })
+        }
+    })
+});
+
+
 //Show selected active task
 app.get("/toDoApp/:user_id/:task_id", function(req,res){
     User.findById(req.params.user_id, function(err,user){
@@ -241,74 +314,13 @@ app.get("/toDoApp/:user_id/:task_id", function(req,res){
     }); 
 });
 
-//Delete any active task
-app.get("/toDoApp/:user_id/delete/:task_id" , function(req,res){
-    // var found = tasks.find(element => element.id==Number(req.params.task_id));
-    // found.status = "deleted";
-    // var index = tasks.indexOf(found);
-    // tasks.splice(index,1);
-    // var newTask = {
-    //     id : found.id,
-    //     image : found.image,
-    //     title : found.title,
-    //     dueDate : found.dueDate,
-    //     label : found.label,
-    //     status : found.status,
-    //     details : found.details
-    // }
-    // archive.push(newTask);
-    User.findById(req.params.user_id, function(err,user){
-        if(err){
-            console.log(err);
-        }else{
-            Task.findById(req.params.task_id ,function(err,found){
-                if(err){
-                    console.log(err);
-                }else{
-                    found.status = "deleted";
-                    user.archives.push(found);
-                    user.save();
-                    user.tasks.pull(found);                   
-                    res.render("show",{task : found, type:"archive" , darkTheme:darkTheme}); 
-                }
-            })
-        }
-    })
-    //res.redirect('/toDoApp/' + req.user._id);
-});
-
-//Change the status of the task
-app.get("/toDoApp/:user_id/:task_id/changeStatus", function(req,res){
-    User.findById(req.params.user_id, function(err,user){
-        if(err){
-            console.log(err);
-        }else{
-            Task.findById(req.params.task_id ,function(err,found){
-                if(err){
-                    console.log(err);
-                }else{
-                    if(found.status==="new"){ 
-                        found.status = "inProgress";
-                    }else{  
-                        found.status = "completed";
-                        user.archives.push(found);
-                        user.save();
-                        user.tasks.pull(found);
-                    }                    
-                    res.render("show",{task : found, type:"archive" , darkTheme:darkTheme}); 
-                }
-            })
-        }
-    })
-    //res.redirect('/toDoApp/' + req.user._id);
-});
 
 //Middleware
 function isLoggedIn(req,res,next){
     if(req.isAuthenticated()){
         return next();
     }
-    res.redirect("/login");
+    res.redirect("/toDoApp/signup");
 }
 
 app.listen(3000, () => console.log(`Server is running at port 3000!!!`))
