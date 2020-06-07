@@ -5,6 +5,7 @@ var taskSchema = mongoose.Schema({
     image : String,
     title : String,
     dueDate: String,
+    dueTime : String,
     label: String , 
     status: String ,
     details : String, 

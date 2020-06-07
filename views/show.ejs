@@ -12,7 +12,7 @@
             <div class="thumbnail">
                <img src="<%= task.image %>">
                <div class="caption">
-                   <h2>Due on : <%= task.dueDate %></h2>
+                   <h2>Due on : <%= task.dueDate %> before <%= task.dueTime %></h2>
                </div>
                <p>
                    <div>
@@ -50,7 +50,7 @@
             <div class="thumbnail">
                <img src="<%= task.image %>">
                <div class="caption">
-                   <h2>Was due on : <%= task.dueDate %></h2>
+                   <h2>Was due on : <%= task.dueDate %> at <%= task.dueTime %></h2>
                </div>
                <p>
                    <div>

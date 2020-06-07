@@ -24,11 +24,15 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="date" class="col-sm-2 control-label"> Due on :</label>
+            <label for="date" class="col-sm-2 control-label"> Due on  :</label>
             <input class="form-control" type="text" name="task[dueDate]" placeholder="dd.mm.yyyy" required>
         </div>
         <div class="form-group">
-            <label for="date"> Category : </label>
+            <label for="time" class="col-sm-2 control-label"> Before :</label>
+            <input class="form-control" type="text" name="task[dueTime]" placeholder="hh:mm in 24 hours format" required>
+        </div>
+        <div class="form-group">
+            <label for="label"> Category : </label>
             <select name="task[label]" class="form-control" id="drop" required>
                 <option value="none" selected disabled hidden> 
                     Select an Option 

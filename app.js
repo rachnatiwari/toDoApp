@@ -7,7 +7,8 @@ var express               = require("express"),
     Task                  = require("./models/tasks");
     Archive               = require("./models/archives");
     LocalStrategy         = require("passport-local"),
-    passportLocalMongoose = require("passport-local-mongoose")
+    passportLocalMongoose = require("passport-local-mongoose"),
+    port                  = process.env.PORT || 3000 || 5000;
 
 //SETTING UP DATABASE
 mongoose.connect("mongodb://localhost:27017/toDoAppDB", { useNewUrlParser: true, useUnifiedTopology: true });
@@ -93,6 +94,7 @@ app.get("/toDoApp/newUser", isLoggedIn , function(req,res){
         image:personal_icon, 
         title:"Add in your first task", 
         dueDate: "01.01.2000", 
+        dueTime: "00:00",
         label:"personal" , 
         status:"new" , 
         details:"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
@@ -123,7 +125,6 @@ app.get("/toDoApp/changeTheme", function(req,res){
 
 //Show the tasks display or home page for the user
 app.get("/toDoApp/:user_id", isLoggedIn ,function(req,res){
-    //console.log(req.user);
     User.findById(req.user._id).populate("tasks").exec(function(err, found){
         if(err){
             console.log(err);
@@ -212,6 +213,7 @@ app.get("/toDoApp/:user_id/:task_id/delete" , function(req,res){
                         image : result.image,
                         title : result.title,
                         dueDate: result.dueDate,
+                        dueTime: result.dueTime,
                         label: result.label , 
                         status: "deleted" ,
                         details : result.details,
@@ -227,7 +229,7 @@ app.get("/toDoApp/:user_id/:task_id/delete" , function(req,res){
                                 if(err){
                                     console.log(err);
                                 }else{
-                                    console.log(user);    
+                                    console.log("Task Deleted");    
                                 }
                             });   
                         }
@@ -266,6 +268,7 @@ app.get("/toDoApp/:user_id/:task_id/changeStatus", function(req,res){
                                     image : result.image,
                                     title : result.title,
                                     dueDate: result.dueDate,
+                                    dueTime: result.dueTime,
                                     label: result.label , 
                                     status: "completed" ,
                                     details : result.details,
@@ -281,13 +284,13 @@ app.get("/toDoApp/:user_id/:task_id/changeStatus", function(req,res){
                                             if(err){
                                                 console.log(err);
                                             }else{
-                                                console.log(user);    
+                                                console.log("Task Completed");    
                                             }
                                         });   
                                     }
                                 });
-                                res.redirect("/toDoApp/" + req.user._id);   
                             }
+                            res.redirect("/");
                         });
                     }            
                 }
@@ -323,4 +326,4 @@ function isLoggedIn(req,res,next){
     res.redirect("/toDoApp/signup");
 }
 
-app.listen(3000, () => console.log(`Server is running at port 3000!!!`))
+app.listen(port, () => console.log(`Server is running!!!`))
