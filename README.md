@@ -1,6 +1,6 @@
 
 
-## To-Do Web Application
+# To-Do Web Application
 
 - **NodeJS** using Express framework with **MongoDB** as database.
 - [Video](https://drive.google.com/file/d/1OeBJjihnQe3aqUmJRKZbj0t5gNnKaEOI/view?usp=sharing)
@@ -62,7 +62,6 @@ Server started on port 3000!!!
 > **Note**: The folder tree does not include sub-directories for common/generated folders. For example - `node_modules`.
 
  - Sub-directories of the folders marked with **' * '** are not shown for clarity.
- - Folders are typed in **bold**
 
 ```bash
 ├── app.js
