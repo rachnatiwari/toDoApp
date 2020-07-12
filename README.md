@@ -3,7 +3,8 @@
 ## To-Do Web Application
 
 - **NodeJS** using Express framework with **MongoDB** as database.
-<!-- - The Live Project is hosted on heroku [here](https://fast-wildwood-41816.herokuapp.com/) -->
+- [Video](https://drive.google.com/file/d/1OeBJjihnQe3aqUmJRKZbj0t5gNnKaEOI/view?usp=sharing)
+- [Presentation](https://drive.google.com/file/d/1VfkVU-mV50VnFvHXz4jUavf401SrAjHz/view?usp=sharing)
 
 ## Technology Stack
 
@@ -102,10 +103,6 @@ Server started on port 3000!!!
 -   Completed and deleted tasks can be viewed in archives
 -   All tasks have Date and Time due on
 -   Elaborative details about each task can be added
-
-
-## Screenshots
-- The screenshots for different pages of the app are in screenshots folder
 
 ## Contributions Best Practices
 
