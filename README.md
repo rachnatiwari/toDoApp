@@ -61,11 +61,9 @@ Server started on port 3000!!!
 
 > **Note**: The folder tree does not include sub-directories for common/generated folders. For example - `node_modules`.
 
- - Sub-directories of the folders marked with **' * '** are not shown for clarity.
-
 ```bash
 ├── app.js
-├── partials   
+├── partials  
 │   ├── archives.js
 │   ├── tasks.js
 │   └── user.js
