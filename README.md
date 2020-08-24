@@ -2,6 +2,7 @@
 
 # To-Do Web Application
 
+- Web App keeping track of the to-do tasks for registered users. Each task has title, label, details of the task and due date. All the deleted and completed tasks are added to user’s archive. The user may toggle between dark and light mode at any time.
 - **NodeJS** using Express framework with **MongoDB** as database.
 - [Video](https://drive.google.com/file/d/1OeBJjihnQe3aqUmJRKZbj0t5gNnKaEOI/view?usp=sharing)
 - [Presentation](https://drive.google.com/file/d/1VfkVU-mV50VnFvHXz4jUavf401SrAjHz/view?usp=sharing)
